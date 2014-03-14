@@ -30,9 +30,7 @@ function main(args) {
 		);
 
 	// block of material, bracelet is cut out of
-	var block = new Box(0,0,0, curve_length, height, thickness);
-
-	var bracelet = block;
+	var bracelet = new Box(0,0,0, curve_length, height, thickness);
 
 	var design = tracelet_4_design_5x28;
 	var design_elements_num = design.length;
@@ -140,10 +138,10 @@ function init() {
 	voxelSize = 0.4*MM; // point precision
 
 	// tetraminos are a combination of horizontal and vertical strokes on borders of 4x4 grid surrounding 4 of 16 cells
-//	Ih = generateTetramino([[0, 0], [1, 0], [2, 0], [3, 0]]); // I horizontal (4-bar)
-	Ih = new Box(	(4 * section_size - bar_width) / 2,	square_side / 2,	0,
-					4 * section_size - bar_width,		square_side,		thickness * 2); // I horizontal (4-bar)
-	Iv = generateTetramino([[0, 0], [0, 1], [0, 2], [0, 3]]); // I vertical (4-bar)
+	Ih = new Box((4 * section_size - bar_width) / 2, square_side / 2, 0,
+		4 * section_size - bar_width, square_side, thickness * 2); // I horizontal (4-bar)
+	Iv = new Box(square_side / 2, (4 * section_size - bar_width) / 2, 0,
+		square_side, 4 * section_size - bar_width, thickness * 2); // I vertical (4-bar)
 
 	O  = new Box(	(2 * section_size - bar_width) / 2,	(2 * section_size - bar_width) / 2,	0,
 					(2 * section_size - bar_width),		2 * section_size - bar_width,		thickness * 2); // O (square)
