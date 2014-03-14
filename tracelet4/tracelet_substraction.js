@@ -137,19 +137,49 @@ function init() {
 
 	voxelSize = 0.4*MM; // point precision
 
-	// tetraminos are a combination of horizontal and vertical strokes on borders of 4x4 grid surrounding 4 of 16 cells
+	// tetraminos are a combination of horizontal and vertical boxes
+	// occupying several squares on the 4x4 grid and spaces between them
+	//
+	// sculpting them square by square produces too many artifacts
+	// so we need to minimize the primitives
 	Ih = new Box((4 * section_size - bar_width) / 2, square_side / 2, 0,
 		4 * section_size - bar_width, square_side, thickness * 2); // I horizontal (4-bar)
 	Iv = new Box(square_side / 2, (4 * section_size - bar_width) / 2, 0,
 		square_side, 4 * section_size - bar_width, thickness * 2); // I vertical (4-bar)
 
-	O  = new Box(	(2 * section_size - bar_width) / 2,	(2 * section_size - bar_width) / 2,	0,
-					(2 * section_size - bar_width),		2 * section_size - bar_width,		thickness * 2); // O (square)
+	O = new Box((2 * section_size - bar_width) / 2, (2 * section_size - bar_width) / 2, 0,
+		(2 * section_size - bar_width),	2 * section_size - bar_width, thickness * 2); // O (square)
 
-	S  = generateTetramino([[0, 1], [1, 1], [1, 0], [2, 0]]); // S
+	S  = new Union(); // S
+	S.add(new Box(
+		square_side / 2 + section_size, section_size - bar_width / 2, 0,
+		square_side, 2 * section_size - bar_width, thickness * 2
+	)); //  |
+	S.add(new Box(
+		(2 * section_size - bar_width) / 2 + section_size, square_side / 2, 0,
+		2 * section_size - bar_width, square_side, thickness * 2
+	)); // -
+	S.add(new Box(
+		(2 * section_size - bar_width) / 2, square_side / 2 + section_size, 0,
+		2 * section_size - bar_width, square_side, thickness * 2
+	)); //    _
+
 	Sv = generateTetramino([[0, 0], [0, 1], [1, 1], [1, 2]]); // S vertical
 
-	Z  = generateTetramino([[0, 0], [1, 0], [1, 1], [2, 1]]); // Z
+	Z  = new Union(); // Z
+	Z.add(new Box(
+		square_side / 2 + section_size, section_size - bar_width / 2, 0,
+		square_side, 2 * section_size - bar_width, thickness * 2
+	)); //  |
+	Z.add(new Box(
+		(2 * section_size - bar_width) / 2, square_side / 2, 0,
+		2 * section_size - bar_width, square_side, thickness * 2
+	)); //    -
+	Z.add(new Box(
+		(2 * section_size - bar_width) / 2 + section_size, square_side / 2 + section_size, 0,
+		2 * section_size - bar_width, square_side, thickness * 2
+	)); // _
+
 	Zv = generateTetramino([[1, 0], [1, 1], [0, 1], [0, 2]]); // Z vertical
 
 	L  = generateTetramino([[0, 0], [0, 1], [0, 2], [1, 2]]); // L
