@@ -2,7 +2,7 @@ var width;
 var oval_distortion;
 var height;
 var thickness;
-var bar_width; 
+var bar_width;
 var num_rows;
 var opening_length;
 var square_side;
@@ -16,74 +16,74 @@ function main(args) {
 	oval_distortion = 0.9; // oval shape
 	height = 34*MM; // width of bracelet
 	thickness = 2*MM;
-	bar_width = 2*MM; 
+	bar_width = 2*MM;
 	num_rows = 5;
 	opening_length = 20*MM;
 	square_side = (
 		height - bar_width * (num_rows + 1)
-	) / num_rows;
+		) / num_rows;
 	section_size = bar_width + square_side;
-  
+
 	// making sure curve length fits perfectly
 	curve_length = width * Math.PI - opening_length;
 	number_of_sections = Math.floor((curve_length - bar_width) / section_size);
 	curve_length = section_size * number_of_sections + bar_width;
-  
-	voxelSize = 0.7*MM; // point precision
 
-  // positioned around center of coordinates
-  var dest = createGrid(
-    -width / 2 * 3.5, width / 2 * 3.5,
-    -height / 2 * 3.5, height / 2 * 3.5,
-    -width / 2 * 3.5, width / 2 * 3.5, // leaving space for original cylinder
-    voxelSize
-  );
-  var bracelet = new Union();
+	voxelSize = 1*MM; // point precision
 
-  // debug dot in the center of the mode
-  // bracelet.add(new Sphere(new Vector3d(0,0,0), 2*MM));
+	// positioned around center of coordinates
+	var dest = createGrid(
+		-width / 2 * 3.5, width / 2 * 3.5,
+		-height / 2 * 3.5, height / 2 * 3.5,
+		-width / 2 * 3.5, width / 2 * 3.5, // leaving space for original cylinder
+		voxelSize
+		);
+	var bracelet = new Union();
 
-  render_strokes(bracelet, traceDesign(tracelet_4_design_5x28));
-  // render_strokes(bracelet, traceDesign([[0,0,T]]));
+	// debug dot in the center of the mode
+	// bracelet.add(new Sphere(new Vector3d(0,0,0), 2*MM));
 
-  var bend = new CompositeTransform();
-  bend.add(RingWrap(width / 2));
-  bend.add(new Scale(1, 1, oval_distortion));
-  
-  bracelet.setTransform(bend);
-  
-  var maker = new GridMaker();
-  maker.setSource(bracelet);
-  maker.makeGrid(dest);
-  return dest;
+	render_strokes(bracelet, traceDesign(tracelet_4_design_5x28));
+	// render_strokes(bracelet, traceDesign([[0,0,T]]));
+
+	var bend = new CompositeTransform();
+	bend.add(RingWrap(width / 2));
+	bend.add(new Scale(1, 1, oval_distortion));
+
+	bracelet.setTransform(bend);
+
+	var maker = new GridMaker();
+	maker.setSource(bracelet);
+	maker.makeGrid(dest);
+	return dest;
 }
 
 // cells is an array of 4 (hence tetramino) elements that are themselves an array of x and y coordinate on 4x4 grid
 function generateTetraminoStrokes(cells) {
 	// horizontal strokes (4x5 array)
 	var horizontal = [[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0],[0, 0, 0, 0, 0]];
-	
+
 	// horizontal strokes (4x5 array)
 	var vertical   = [[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0],[0, 0, 0, 0]];
 
 	for (var i = 0; i < 4; i++) {
 		var x = cells[i][0];
 		var y = cells[i][1];
-		
+
 		//console.log("x: " + x + "; y: " + y);
-		
+
 		// horizontal strokes
 		horizontal[x][y]++; // top border
 		horizontal[x][y+1]++; // bottom border
-		
+
 		// vertical strokes
 		vertical[x][y]++; // left border
 		vertical[x+1][y]++; // right border
 	}
-	
+
 	// now make all duplicate borders disappear to only draw a perimiter
-	
-	// horizontal 
+
+	// horizontal
 	for (var x=0; x < 4; x++) {
 		for (var y=0; y < 5; y++) {
 			if (horizontal[x][y] > 1) {
@@ -91,8 +91,8 @@ function generateTetraminoStrokes(cells) {
 			}
 		}
 	}
-	
-	// vertical 
+
+	// vertical
 	for (var x=0; x < 4; x++) {
 		for (var y=0; y < 5; y++) {
 			if (vertical[x][y] > 1) {
@@ -100,7 +100,7 @@ function generateTetraminoStrokes(cells) {
 			}
 		}
 	}
-	
+
 	return [horizontal, vertical];
 }
 
@@ -132,39 +132,39 @@ var Tl = generateTetraminoStrokes([[0, 0], [0, 1], [0, 2], [1, 1]]); // T left
 var Tr = generateTetraminoStrokes([[1, 0], [1, 1], [1, 2], [0, 1]]); // T right
 
 var tetraminos = [
-	['I horizontal (4-bar)', 'Ih', Ih],
-	['I vertical (4-bar)', 'Iv', Iv],
-	['O (square)', 'O', O],
-	['S', 'S', S],
-	['S vertical', 'Sv', Sv],
-	['Z', 'Z', Z],
-	['Z vertical', 'Z', Zv],
-	['L', 'L', L],
-	['L upside-down', 'Lx', Lx],
-	['L up', 'Lu', Lu],
-	['L down', 'Ld', Ld],
-	['J', 'J', J],
-	['J upside-down', 'Jx', Jx],
-	['J up', 'Ju', Ju],
-	['J down', 'Jd', Jd],
-	['T', 'T', T],
-	['T upside-down', 'Tu', Tu],
-	['T left', 'Tl', Tl],
-	['T right', 'Tr', Tr]
+['I horizontal (4-bar)', 'Ih', Ih],
+['I vertical (4-bar)', 'Iv', Iv],
+['O (square)', 'O', O],
+['S', 'S', S],
+['S vertical', 'Sv', Sv],
+['Z', 'Z', Z],
+['Z vertical', 'Z', Zv],
+['L', 'L', L],
+['L upside-down', 'Lx', Lx],
+['L up', 'Lu', Lu],
+['L down', 'Ld', Ld],
+['J', 'J', J],
+['J upside-down', 'Jx', Jx],
+['J up', 'Ju', Ju],
+['J down', 'Jd', Jd],
+['T', 'T', T],
+['T upside-down', 'Tu', Tu],
+['T left', 'Tl', Tl],
+['T right', 'Tr', Tr]
 ];
 
 /*
- * Returns a pair of two-dimensional arrays for horizontal and vertical strokes based on provided design 
+ * Returns a pair of two-dimensional arrays for horizontal and vertical strokes based on provided design
  */
 function traceDesign(design) {
 	var strokes = [
-		[], // horizontal
-		[], // vertical
+	[], // horizontal
+	[], // vertical
 	];
-	
+
 	for(var i = 0; i < design.length; i++) {
 		var position = design[i];
-		
+
 		// console.log(position);
 
 		var origin_x = position[0];
@@ -229,42 +229,42 @@ function traceDesign(design) {
 			}
 		}
 	}
-	
+
 	return strokes;
 }
 
 function render_strokes(bracelet, strokes) {
 	var horizontal_strokes = strokes[0];
 	var vertical_strokes = strokes[1];
-	
+
 	var grid_size = get_grid_width_size(strokes);
 	var grid_width = grid_size[0];
 	var grid_height = grid_size[1];
-	
-	// horizontal 
+
+	// horizontal
 	for (var x=0; x < horizontal_strokes.length; x++) {
 		for (var y=0; y < horizontal_strokes[x].length; y++) {
 			if (horizontal_strokes[x][y] > 0) {
 				bracelet.add(new Box(
 					-curve_length / 2 + (x + 0.5) * section_size + bar_width / 2,
 					-height / 2 + y * section_size,
-          			0,
-          			section_size + bar_width, bar_width, thickness
-				));
+					0,
+					section_size + bar_width, bar_width, thickness
+					));
 			}
 		}
 	}
 
-	// vertical 
+	// vertical
 	for (var x=0; x < vertical_strokes.length; x++) {
 		for (var y=0; y < vertical_strokes[x].length; y++) {
 			if (vertical_strokes[x][y] > 0) {
 				bracelet.add(new Box(
 					-curve_length / 2 + x * section_size + bar_width / 2,
 					-height / 2 + (y + 0.5) * section_size,
-          			0,
-          			bar_width, section_size + bar_width, thickness
-				));
+					0,
+					bar_width, section_size + bar_width, thickness
+					));
 			}
 		}
 	}
@@ -310,7 +310,7 @@ function display_strokes(table, strokes) {
 
 	var tds = [];
 
-//	console.log("grid_width: " + grid_width + "; grid_height: " + grid_height);
+	//	console.log("grid_width: " + grid_width + "; grid_height: " + grid_height);
 	for(var y = 0; y < grid_height; y++) {
 		var tr = $('<tr></tr>');
 		for (var x = 0; x < grid_width; x++) {
@@ -328,7 +328,7 @@ function display_strokes(table, strokes) {
 
 	// now, setting borders on all the TDs
 
-	// horizontal 
+	// horizontal
 	for (var x=0; x < horizontal_strokes.length; x++) {
 		for (var y=0; y < horizontal_strokes[x].length; y++) {
 			if (horizontal_strokes[x][y] > 0) {
@@ -341,7 +341,7 @@ function display_strokes(table, strokes) {
 		}
 	}
 
-	// vertical 
+	// vertical
 	for (var x=0; x < vertical_strokes.length; x++) {
 		for (var y=0; y < vertical_strokes[x].length; y++) {
 			if (vertical_strokes[x][y] > 0) {
@@ -356,18 +356,18 @@ function display_strokes(table, strokes) {
 }
 
 var tracelet_4_design_5x28 = [
-	[0, 0, Ld],  [0, 1, Tr],  [0, 3, Ju],
-	[2, 0, Zv],  [2, 2, Tu],  [3, 3, Lu],
-	[4, 0, L],   [5, 0, O],   [6, 2, Jx],
-	[7, 0, Sv],  [7, 3, O],   [8, 0, T],
-	[9, 2, Tl],  [10, 1, Sv], [10, 4, Ih],
-	[11, 0, Ju], [12, 0, Ih], [12, 2, O],
-	[14, 1, O],  [14, 3, Ju], [15, 3, Jd],
-	[16, 0, Jx], [17, 0, Zv], [18, 2, L],
-	[19, 0, Jd], [19, 1, Z],  [19, 2, Sv],
-	[21, 3, O],  [22, 0, Jx], [23, 0, S],
-	[23, 2, T],  [23, 3, Ju], [25, 0, S],
-	[25, 3, Z],  [26, 1, Tr]
+[0, 0, Ld],  [0, 1, Tr],  [0, 3, Ju],
+[2, 0, Zv],  [2, 2, Tu],  [3, 3, Lu],
+[4, 0, L],   [5, 0, O],   [6, 2, Jx],
+[7, 0, Sv],  [7, 3, O],   [8, 0, T],
+[9, 2, Tl],  [10, 1, Sv], [10, 4, Ih],
+[11, 0, Ju], [12, 0, Ih], [12, 2, O],
+[14, 1, O],  [14, 3, Ju], [15, 3, Jd],
+[16, 0, Jx], [17, 0, Zv], [18, 2, L],
+[19, 0, Jd], [19, 1, Z],  [19, 2, Sv],
+[21, 3, O],  [22, 0, Jx], [23, 0, S],
+[23, 2, T],  [23, 3, Ju], [25, 0, S],
+[25, 3, Z],  [26, 1, Tr]
 ];
 
 function display_design() {
@@ -376,7 +376,7 @@ function display_design() {
 
 	// testing the design
 	table_container.append($('<h1>Design<h1/>'));
-	
+
 	table = $('<table>');
 	table_container.append(table);
 
