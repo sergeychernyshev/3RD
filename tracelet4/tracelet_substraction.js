@@ -164,7 +164,19 @@ function init() {
 		2 * section_size - bar_width, square_side, thickness * 2
 	)); //    _
 
-	Sv = generateTetramino([[0, 0], [0, 1], [1, 1], [1, 2]]); // S vertical
+	Sv = new Union(); // Sv
+	Sv.add(new Box(
+		section_size - bar_width / 2, square_side / 2 + section_size, 0,
+		2 * section_size - bar_width, square_side, thickness * 2
+	)); // --
+	Sv.add(new Box(
+		square_side / 2 + section_size, (2 * section_size - bar_width) / 2 + section_size, 0,
+		square_side, 2 * section_size - bar_width, thickness * 2
+	)); //  !
+	Sv.add(new Box(
+		square_side / 2, (2 * section_size - bar_width) / 2, 0,
+		square_side, 2 * section_size - bar_width, thickness * 2
+	)); // i
 
 	Z  = new Union(); // Z
 	Z.add(new Box(
@@ -180,7 +192,19 @@ function init() {
 		2 * section_size - bar_width, square_side, thickness * 2
 	)); // _
 
-	Zv = generateTetramino([[1, 0], [1, 1], [0, 1], [0, 2]]); // Z vertical
+	Zv = new Union(); // Zv
+	Zv.add(new Box(
+		section_size - bar_width / 2, square_side / 2 + section_size, 0,
+		2 * section_size - bar_width, square_side, thickness * 2
+	)); // --
+	Zv.add(new Box(
+		square_side / 2, (2 * section_size - bar_width) / 2 + section_size, 0,
+		square_side, 2 * section_size - bar_width, thickness * 2
+	)); //  !
+	Zv.add(new Box(
+		square_side / 2 + section_size, (2 * section_size - bar_width) / 2, 0,
+		square_side, 2 * section_size - bar_width, thickness * 2
+	)); // i
 
 	L  = generateTetramino([[0, 0], [0, 1], [0, 2], [1, 2]]); // L
 	Lx = generateTetramino([[1, 0], [1, 1], [1, 2], [0, 0]]); // L upside-down
