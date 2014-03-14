@@ -48,16 +48,11 @@ function main(args) {
 		bracelet = new Subtraction(bracelet, cutOut);
 	}
 
-	/*
 	var bend = new CompositeTransform();
 	bend.add(RingWrap(width / 2));
 	bend.add(new Scale(1, 1, oval_distortion));
 
 	bracelet.setTransform(bend);
-	 */
-
-	// reference point in the center of the model
-	// bracelet.add(new Sphere(new Vector3d(0,0,0), 2*MM));
 
 	var maker = new GridMaker();
 	maker.setSource(bracelet);
