@@ -93,7 +93,7 @@ function generateTetramino(squares) {
 					(squares[i][1] + 0.5) * section_size - bar_width / 2 - square_side + bar_width / 2, // one below
 					0,
 					square_side,
-					bar_width,
+					square_side,
 					thickness * 2
 					));
 			}
@@ -105,7 +105,7 @@ function generateTetramino(squares) {
 					(squares[i][0] + 0.5) * section_size - bar_width / 2 - square_side + bar_width / 2,  // one on the left
 					(squares[i][1] + 0.5) * section_size - bar_width / 2,
 					0,
-					bar_width,
+					square_side,
 					square_side,
 					thickness * 2
 					));
@@ -132,10 +132,9 @@ function init() {
 	// TODO calculate width and height out of design parameters and wrist and opening sizes
 	curve_length = width * Math.PI - opening_length;
 	number_of_sections = Math.floor((curve_length - bar_width) / section_size);
-	debug(number_of_sections);
 	curve_length = section_size * number_of_sections + bar_width;
 
-	voxelSize = 0.4*MM; // point precision
+	voxelSize = 0.2*MM; // point precision
 
 	// tetraminos are a combination of horizontal and vertical boxes
 	// occupying several squares on the 4x4 grid and spaces between them
