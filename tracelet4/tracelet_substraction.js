@@ -121,7 +121,7 @@ function init() {
 	width = 68*MM; // width of the wrist
 	oval_distortion = 0.9; // oval shape
 	thickness = 3*MM;
-	bar_width = 3*MM;
+	bar_width = 2*MM;
 	opening_length = 20*MM;
 
 	design_width_tiles = 5;
@@ -133,7 +133,7 @@ function init() {
 	section_size = bar_width + square_side;
 	height = design_width_tiles * section_size + bar_width; // width of bracelet
 
-	voxelSize = 0.2*MM; // point precision
+	voxelSize = 0.1*MM; // point precision
 
 	debug("curve_length: " + curve_length / MM);
 	debug("square_side: " + square_side / MM);
