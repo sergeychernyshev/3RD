@@ -133,7 +133,7 @@ function init() {
 	section_size = bar_width + square_side;
 	height = design_width_tiles * section_size + bar_width; // width of bracelet
 
-	voxelSize = 0.8*MM; // point precision
+	voxelSize = 0.2*MM; // point precision
 
 	debug("curve_length: " + curve_length / MM);
 	debug("square_side: " + square_side / MM);
@@ -248,7 +248,7 @@ function init() {
 		square_side, 2 * section_size - bar_width, thickness * 2
 		)); //  !
 
-	J = new Union();
+	J = new Union(); // J
 	J.add(new Box(
 		square_side / 2 + section_size, (3 * section_size - bar_width) / 2, 0,
 		square_side, 3 * section_size - bar_width, thickness * 2
@@ -288,10 +288,46 @@ function init() {
 		square_side, 2 * section_size - bar_width, thickness * 2
 		)); //  !
 
-	T  = generateTetramino([[0, 0], [1, 0], [2, 0], [1, 1]]); // T
-	Tu = generateTetramino([[0, 1], [1, 1], [2, 1], [1, 0]]); // T upside-down
-	Tl = generateTetramino([[0, 0], [0, 1], [0, 2], [1, 1]]); // T left
-	Tr = generateTetramino([[1, 0], [1, 1], [1, 2], [0, 1]]); // T right
+
+	T = new Union(); // T
+	T.add(new Box(
+		(3 * section_size - bar_width) / 2, square_side / 2, 0,
+		3 * section_size - bar_width, square_side, thickness * 2
+		)); // ---
+	T.add(new Box(
+		square_side / 2 + section_size, (2 * section_size - bar_width) / 2, 0,
+		square_side, 2 * section_size - bar_width, thickness * 2
+		)); //  !
+
+	Tu = new Union(); // Ju
+	Tu.add(new Box(
+		(3 * section_size - bar_width) / 2, square_side / 2 + section_size, 0,
+		3 * section_size - bar_width, square_side, thickness * 2
+		)); // ---
+	Tu.add(new Box(
+		square_side / 2 + section_size, (2 * section_size - bar_width) / 2, 0,
+		square_side, 2 * section_size - bar_width, thickness * 2
+		)); //  !
+
+	Tl = new Union(); // Tl
+	Tl.add(new Box(
+		square_side / 2, (3 * section_size - bar_width) / 2, 0,
+		square_side, 3 * section_size - bar_width, thickness * 2
+		)); // |
+	Tl.add(new Box(
+		(2 * section_size - bar_width) / 2, square_side / 2 + section_size, 0,
+		2 * section_size - bar_width, square_side, thickness * 2
+		)); // __
+
+	Tr = new Union(); // Tr
+	Tr.add(new Box(
+		square_side / 2 + section_size, (3 * section_size - bar_width) / 2, 0,
+		square_side, 3 * section_size - bar_width, thickness * 2
+	)); // |
+	Tr.add(new Box(
+		(2 * section_size - bar_width) / 2, square_side / 2 + section_size, 0,
+		2 * section_size - bar_width, square_side, thickness * 2
+		)); // __
 
 	tetraminos = [
 	['I horizontal (4-bar)', 'Ih', Ih],
