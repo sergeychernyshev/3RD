@@ -32,7 +32,7 @@ function main(args) {
 	// block of material, bracelet is cut out of
 	var bracelet = new Box(0,0, 0, curve_length, height, thickness);
 
-	//	var design = [[0,0,Lu]];
+	//var design = [[0,0,J]];
 	var design = tracelet_4_design_5x28;
 	var design_elements_num = design.length;
 
@@ -218,7 +218,7 @@ function init() {
 		2 * section_size - bar_width, square_side, thickness * 2
 		)); // __
 
-	Lx = new Union(); // L
+	Lx = new Union(); // Lx
 	Lx.add(new Box(
 		square_side / 2 + section_size, (3 * section_size - bar_width) / 2, 0,
 		square_side, 3 * section_size - bar_width, thickness * 2
@@ -238,7 +238,7 @@ function init() {
 		square_side, 2 * section_size - bar_width, thickness * 2
 		)); //  !
 
-	Ld = new Union(); // Lu
+	Ld = new Union(); // Ld
 	Ld.add(new Box(
 		(3 * section_size - bar_width) / 2, square_side / 2, 0,
 		3 * section_size - bar_width, square_side, thickness * 2
@@ -248,10 +248,45 @@ function init() {
 		square_side, 2 * section_size - bar_width, thickness * 2
 		)); //  !
 
-	J  = generateTetramino([[1, 0], [1, 1], [1, 2], [0, 2]]); // J
-	Jx = generateTetramino([[0, 0], [0, 1], [0, 2], [1, 0]]); // J upside-down
-	Ju = generateTetramino([[0, 1], [1, 1], [2, 1], [0, 0]]); // J up
-	Jd = generateTetramino([[0, 0], [1, 0], [2, 0], [2, 1]]); // J down
+	J = new Union();
+	J.add(new Box(
+		square_side / 2 + section_size, (3 * section_size - bar_width) / 2, 0,
+		square_side, 3 * section_size - bar_width, thickness * 2
+	)); // |
+	J.add(new Box(
+		(2 * section_size - bar_width) / 2, square_side / 2 + section_size * 2, 0,
+		2 * section_size - bar_width, square_side, thickness * 2
+		)); // __
+
+	Jx = new Union(); // J
+	Jx.add(new Box(
+		square_side / 2, (3 * section_size - bar_width) / 2, 0,
+		square_side, 3 * section_size - bar_width, thickness * 2
+		)); // |
+	Jx.add(new Box(
+		(2 * section_size - bar_width) / 2, square_side / 2, 0,
+		2 * section_size - bar_width, square_side, thickness * 2
+		)); // __
+
+	Ju = new Union(); // Ju
+	Ju.add(new Box(
+		(3 * section_size - bar_width) / 2, square_side / 2 + section_size, 0,
+		3 * section_size - bar_width, square_side, thickness * 2
+		)); // ---
+	Ju.add(new Box(
+		square_side / 2, (2 * section_size - bar_width) / 2, 0,
+		square_side, 2 * section_size - bar_width, thickness * 2
+		)); //  !
+
+	Jd = new Union(); // Jd
+	Jd.add(new Box(
+		(3 * section_size - bar_width) / 2, square_side / 2, 0,
+		3 * section_size - bar_width, square_side, thickness * 2
+		)); // ---
+	Jd.add(new Box(
+		square_side / 2 + section_size * 2, (2 * section_size - bar_width) / 2, 0,
+		square_side, 2 * section_size - bar_width, thickness * 2
+		)); //  !
 
 	T  = generateTetramino([[0, 0], [1, 0], [2, 0], [1, 1]]); // T
 	Tu = generateTetramino([[0, 1], [1, 1], [2, 1], [1, 0]]); // T upside-down
